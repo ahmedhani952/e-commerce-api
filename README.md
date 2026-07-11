@@ -18,9 +18,11 @@ A modular, robust, and secure E-Commerce RESTful backend engine engineered utili
 
 ---
 
+
+### 1. Repository Instantiation
 ## 🛠️ Step-by-Step Installation Manual
 
 ### 1. Repository Instantiation
 ```bash
-git clone [https://github.com/YOUR_PROFILE/e-commerce-api.git](https://github.com/YOUR_PROFILE/e-commerce-api.git)
+git clone [https://github.com/ahmedhani952/e-commerce-api.git](https://github.com/ahmedhani952/e-commerce-api.git)
 cd e-commerce-api
