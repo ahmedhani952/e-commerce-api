@@ -39,9 +39,9 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-productSchema.pre('save', function (next) {
+// FIX: Removed 'next()' parameter to match modern Mongoose standards
+productSchema.pre('save', function () {
   this.inStock = this.stock > 0;
-  next();
 });
 
 module.exports = mongoose.model('Product', productSchema);

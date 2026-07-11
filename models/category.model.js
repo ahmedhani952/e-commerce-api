@@ -18,11 +18,14 @@ const categorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-categorySchema.pre('save', function (next) {
+// FIX: Modern Mongoose pre-save hook handling slug generation without passing 'next'
+categorySchema.pre('save', function () {
   if (this.name) {
-    this.slug = this.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    this.slug = this.name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '');
   }
-  next();
 });
 
 module.exports = mongoose.model('Category', categorySchema);
