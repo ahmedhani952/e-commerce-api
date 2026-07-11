@@ -14,7 +14,6 @@ const seedData = async () => {
   try {
     await connectDB();
 
-    // Mandatory Wipe Sequence order
     console.log('Cleaning up existing database records...');
     await Order.deleteMany({});
     await Cart.deleteMany({});
@@ -37,7 +36,7 @@ const seedData = async () => {
         price: 199.99,
         stock: 45,
         category: categories[0]._id,
-        images: ['headphone1.jpg', 'headphone1_side.jpg']
+        images: ['headphone1.jpg']
       },
       {
         name: 'OLED Smart Watch',
@@ -53,7 +52,7 @@ const seedData = async () => {
         price: 85.00,
         stock: 60,
         category: categories[1]._id,
-        images: ['jacket.jpg', 'jacket_back.jpg']
+        images: ['jacket.jpg']
       },
       {
         name: 'Classic Leather Boots',
@@ -75,7 +74,7 @@ const seedData = async () => {
         name: 'Non-Stick Ceramic Pan Set',
         description: 'Eco-friendly chemical free non-stick heat uniform kitchen set.',
         price: 210.00,
-        stock: 0, // InStock should compute to false dynamically
+        stock: 0,
         category: categories[2]._id,
         images: ['pans.jpg']
       }
@@ -86,16 +85,16 @@ const seedData = async () => {
     console.log('----------------------------------------------------');
     console.log(`SUCCESS: Database Populated Successfully!`);
     console.log(`Added: ${categories.length} Categories.`);
-    console.log(`Added: ${seededProducts.length} Products distributed across categories.`);
+    console.log(`Added: ${seededProducts.length} Products.`);
     console.log('----------------------------------------------------');
 
   } catch (error) {
-    console.error(`Seeding process encountered structural failure: ${error.message}`);
+    // This safely prints the real validation error details instead of crashing on 'next'
+    console.error('❌ Seeding failed with detailed error:', error);
   } finally {
     await mongoose.disconnect();
     console.log('Database reference connection detached safely.');
     process.exit(0);
   }
 };
-
 seedData();
