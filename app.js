@@ -13,9 +13,22 @@ const orderRouter = require('./routes/order.routes');
 
 const app = express();
 
-// Security and Structural Payload Extraction Parsers Pipeline
-app.use(express.json({ limit: '10kb' }));
-app.use(mongoSanitize()); // Prevent NoSQL Injection attacks
+// 1. Standard body parsers
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// 2. FIX: Express 5 req.query compatibility layer patch
+app.use((req, res, next) => {
+  Object.defineProperty(req, 'query', {
+    ...Object.getOwnPropertyDescriptor(req, 'query'),
+    value: req.query,
+    writable: true,
+  });
+  next();
+});
+
+// 3. Now it is completely safe to call your sanitizer
+app.use(mongoSanitize());
 
 // Root Active Sub-Router Mount Mapping points
 app.use('/api/categories', categoryRouter);
