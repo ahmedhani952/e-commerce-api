@@ -23,8 +23,8 @@ app.use('/api/products', productRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/orders', orderRouter);
 
-// Fallback Unhandled Wildcard Route Layer Handling 404 Conditions
-app.all('*', (req, res, next) => {
+// Fallback Unhandled Route Layer Handling 404 Conditions
+app.use((req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server platform!`, 404));
 });
 
